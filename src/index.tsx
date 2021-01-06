@@ -1,6 +1,7 @@
 import * as React from "react";
 import { DraggableEventHandler, default as DraggableRoot } from "react-draggable";
 import { Enable, Resizable, ResizeDirection } from "re-resizable";
+import { withDefaultRelativePosition } from "./withDefaultRelativePosition";
 
 // FIXME: https://github.com/mzabriskie/react-draggable/issues/381
 //         I can not find `scale` too...
@@ -196,7 +197,7 @@ interface DefaultProps {
   scale: number;
 }
 
-export class Rnd extends React.PureComponent<Props, State> {
+class RndBase extends React.PureComponent<Props, State> {
   public static defaultProps: DefaultProps = {
     maxWidth: Number.MAX_SAFE_INTEGER,
     maxHeight: Number.MAX_SAFE_INTEGER,
@@ -669,3 +670,5 @@ export class Rnd extends React.PureComponent<Props, State> {
     );
   }
 }
+
+export const Rnd = withDefaultRelativePosition(RndBase);

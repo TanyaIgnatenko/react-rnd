@@ -9,6 +9,9 @@ import BasicControlled from "./basic/controlled";
 
 import MinUncontrolled from "./min/uncontrolled";
 
+import LeftTopDefaultPosition from "./relativeDefaultPosition/leftTop";
+import RightBottomDefaultPosition from "./relativeDefaultPosition/rightBottom";
+
 import ScaleParentUnControlled from "./scale/parent-uncontrolled";
 import ScaleWindowUnControlled from "./scale/window-uncontrolled";
 import ScaleBodyX05UnControlled from "./scale/body-uncontrolled-x0-5";
@@ -52,6 +55,10 @@ storiesOf("basic", module)
   .add("controlled", () => <BasicControlled />)
   .add("multi uncontrolled", () => <BasicMultiUncontrolled />)
   .add("multi controlled", () => <BasicMultiControlled />);
+
+storiesOf("relative default position", module)
+  .add("left top", () => <LeftTopDefaultPosition />)
+  .add("right bottom", () => <RightBottomDefaultPosition />);
 
 storiesOf("bounds", module)
   .add("parent uncontrolled", () => <BoundsParentUncontrolled />)
