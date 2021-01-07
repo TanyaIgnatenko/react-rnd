@@ -1,5 +1,5 @@
 import React from "react";
-import { Rnd } from "../../src";
+import Rnd from "../../src";
 
 const style = {
   display: "flex",
