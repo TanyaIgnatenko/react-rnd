@@ -584,7 +584,7 @@ If you have a bug to report, please reproduce the bug in [CodeSandbox](https://c
 
 #### v9.1.1
 
-- Fix: Add `scale` props to index.js.flow.
+- Fix: Add `scale` props to index.tsx.js.flow.
 
 #### v9.1.0
 
@@ -745,7 +745,7 @@ fix: `isMounted` and `(!this.state.isMounted) return <div />` line #356
 
 #### v5.0.5
 
-- Add index.js.flow
+- Add index.tsx.js.flow
 
 #### v5.0.4
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, RefObject } from "react";
 
 type Size = {width: number, height: number}
-type UseParentSize = (_: RefObject<HTMLElement>) => Size | undefined;
+type UseParentSize = (_: RefObject<HTMLElement | undefined>) => Size | undefined;
 
 export const useParentSize: UseParentSize = (nodeRef) => {
   const [parentSize, setParentSize] = useState<Size>();

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React from 'react';
-import Rnd from '../src';
+import Rnd from '../src/base';
 
 const style = {
   display: 'flex',

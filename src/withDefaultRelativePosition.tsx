@@ -1,6 +1,7 @@
 import React, { ComponentType, ReactNode, useRef } from "react";
 import { useParentSize } from "./hooks/useParentSize";
 import { Props } from "../lib";
+import { useSizeInPixels } from "./hooks/useSizeInPixels";
 
 type ExtendedDefault = {
   x?: number;
@@ -10,26 +11,30 @@ type ExtendedDefault = {
   top?: number;
   bottom?: number;
 } & {
-  width: number;
-  height: number;
+  width: string;
+  height: string;
 };
 type ReturnedComponent = (_: Omit<Props, "default"> & {default: ExtendedDefault}) => ReactNode;
 type WithDefaultRelativePosition = (_: ComponentType<Props>) => ReturnedComponent;
 
 export const withDefaultRelativePosition: WithDefaultRelativePosition = (WrappedComponent) => {
-  return ({ default: defaultValue, ...restProps }) => {
-   const wrapperNodeRef = useRef(null);
-    const parentSize = useParentSize(wrapperNodeRef);
+  return ({
+            default: defaultValue,
+            parentNodeRef,
+            ...restProps
+  }) => {
+    const nodeRef = useRef<HTMLElement>();
 
-    if (!defaultValue) {
-      return <WrappedComponent {...restProps} />;
-    }
+    const processedWidth = useSizeInPixels(nodeRef, defaultValue.width, "width");
+    const processedHeight = useSizeInPixels(nodeRef, defaultValue.height, "height");
+
+    const parentSize = useParentSize(nodeRef);
 
     const needsWindowSize = defaultValue.right || defaultValue.bottom;
 
-    if (needsWindowSize && !parentSize) {
+    if (needsWindowSize && !parentSize || !processedWidth || !processedHeight) {
       return (
-        <div ref={wrapperNodeRef} style={{ height: "100%" }}>
+        <div ref={nodeRef} style={{ height: "100%" }}>
           <WrappedComponent {...restProps} default={defaultValue} style={{ visible: false }}/>
         </div>
       );
@@ -37,10 +42,10 @@ export const withDefaultRelativePosition: WithDefaultRelativePosition = (Wrapped
 
     const processedDefaultX = defaultValue.x !== undefined
       ? defaultValue.x
-      : defaultValue.left || (parentSize!.width - (defaultValue.width + defaultValue.right));
+      : defaultValue.left || (parentSize!.width - (processedWidth + defaultValue.right));
     const processedDefaultY = defaultValue.y !== undefined
       ? defaultValue.y
-      : defaultValue.top || (parentSize!.height - (defaultValue.height + defaultValue.bottom));
+      : defaultValue.top || (parentSize!.height - (processedHeight + defaultValue.bottom));
 
     const processedDefault = {
       ...defaultValue,
